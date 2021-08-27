@@ -15,37 +15,39 @@ next: /learn/queries/
 - [Example](#example)
 - [More Information](#more-information)
 
-GraphQL is a query language for your API. It provides a server-side runtime for executing queries that you define for your data. GraphQL isn't tied to any specific database or storage engine. Instead, it's backed by your existing code and data. This makes GraphQL more efficient than REST APIs for large datasets because it allows you to fetch only the data you want.
+GraphQL is a query language for your API that relies on graphs, or relationships, between pieces of data. GraphQL isn't tied to any specific database or storage engine. Instead, it's backed by your existing code and data and provides a server-side runtime environment to execute your queries. This makes GraphQL more efficient than REST APIs for large, complex datasets because it allows you to fetch only the data you want.
 
-## Typical Workflow
+## Workflow
 
-To create a GraphQL service, you'll follow this typical workflow:
+To create a GraphQL service, you'll follow this workflow:
 
-1. Define your schema using types.
-1. Get data from the server with functions.
-1. Write a query.
-1. Get the results and parse the data.
+1. Define your [schema](/schema/) using types and fields.
+1. Get data with functions.
+1. Start the server.
+1. Write a [query](/queries/).
+1. Get the results.
 
 ## Example
 
 Following the workflow above, here's a basic example.
 
-Define the types Character and the Query:
+First, define the **Character** type according to the way your data is structured, including its fields and their [data types](/schema/#scalar-types). Then, define the **Query**:
 
 ```graphql
-#Create the Character type
+#Create the character
 type Character {
   name: String
   homeworld: String
+  firstAppearance: String
 }
 
-#Create a query for the Character
+#Create a query that gets characters as an array
 type Query {
   hero: [Character]
 }
 ```
 
-Get the data from the server:
+Where the data from the server looks like the following:
 
 ```js
 //Data
@@ -53,18 +55,20 @@ const hero = [
   {
     name: "Luke Skywalker",
     homeworld: "Tatooine",
+    firstAppearance: "A New Hope",
   },
   {
     name: "Leia Organa",
     homeworld: "Alderaan",
+    firstAppearance: "A New Hope",
   },
 ];
 ```
 
-Resolve the data:
+Get the data with functions:
 
 ```js
-//Fetch data from hero
+//Fetch data from hero with resolver
 const resolvers = {
   Query: {
     hero: () => hero,
@@ -72,14 +76,12 @@ const resolvers = {
 };
 ```
 
-After a GraphQL service is running (typically at a URL on a web service), it can receive GraphQL queries to validate and execute.
-The service first checks a query to ensure it only refers to the types and fields defined, and then runs the provided functions
-to produce a result.
+When you start the server and make a query, the service [validates](/validation/) the query to ensure it only refers to defined types and fields. Then, it [executes](/execution/) the functions that you provide, like the resolver above, to produce a result.
 
-For example, the query:
+So a query that fetches the hero's name and homeworld like this:
 
 ```graphql
-query GetHero {
+query GetHeroes {
   hero {
     name
     homeworld
@@ -107,6 +109,6 @@ Produces the following JSON result:
 
 ## More Information
 
-- Learn GraphQL with practical tutorials: [How to GraphQL](https://www.howtographql.com).
-- Check out the free EDX online course: [Exploring GraphQL: A Query Language for APIs](https://www.edx.org/course/exploring-graphql-a-query-language-for-apis).
-- Implement a GraphQL service with [a specific language](/code/).
+- Learn GraphQL with practical tutorials from [How to GraphQL](https://www.howtographql.com)
+- Check out the free EDX online course [Exploring GraphQL: A Query Language for APIs](https://www.edx.org/course/exploring-graphql-a-query-language-for-apis)
+- Implement a GraphQL service with a specific [programming language](/code/)
