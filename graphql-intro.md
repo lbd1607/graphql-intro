@@ -11,11 +11,14 @@ next: /learn/queries/
 
 ## Contents
 
-- [Typical Workflow](#typical-workflow)
+- [Overview](#overview)
+- [Workflow](#workflow)
 - [Example](#example)
 - [More Information](#more-information)
 
-GraphQL is a query language for your API that relies on graphs, or relationships, between pieces of data. GraphQL isn't tied to any specific database or storage engine. Instead, it's backed by your existing code and data and provides a server-side runtime environment to execute your queries. This makes GraphQL more efficient than REST APIs for large, complex datasets because it allows you to fetch only the data you want.
+## Overview
+
+GraphQL is a query language for your API that relies on graphs, or relationships, between pieces of data. GraphQL isn't tied to any specific database or storage engine. Instead, it provides a server-side runtime environment to execute your queries, backed by your existing code and data. This makes GraphQL more efficient than REST APIs for large, complex datasets because it allows you to fetch only the data you want when you need it.
 
 ## Workflow
 
@@ -65,7 +68,7 @@ const hero = [
 ];
 ```
 
-Get the data with functions:
+Then get the data with functions:
 
 ```js
 //Fetch data from hero with resolver
@@ -78,7 +81,7 @@ const resolvers = {
 
 When you start the server and make a query, the service [validates](/validation/) the query to ensure it only refers to defined types and fields. Then, it [executes](/execution/) the functions that you provide, like the resolver above, to produce a result.
 
-So a query that fetches the hero's name and homeworld like this:
+So a query that fetches the hero's **name** and **homeworld** like this:
 
 ```graphql
 query GetHeroes {
